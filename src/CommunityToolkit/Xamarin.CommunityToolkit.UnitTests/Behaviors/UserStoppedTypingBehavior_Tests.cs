@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Behaviors;
 using Xamarin.Forms;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 {
@@ -11,7 +11,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 		const int defaultTimeThreshold = 1000;
 		const int defaultLengthThreshold = 0;
 
-		[Fact]
+		[Test]
 		public async Task ExecuteCommandWhenTimeThresholdHasExpired()
 		{
 			// arrange
@@ -26,7 +26,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldNotExecuteCommandBeforeTimeThresholdHasExpired()
 		{
 			// arrange
@@ -41,7 +41,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldOnlyExectueCommandOnceWhenTextChangedHasOccurredMultipleTimes()
 		{
 			// arrange
@@ -56,10 +56,10 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			await Task.Delay(defaultTimeThreshold + 100);
 
 			// assert
-			Assert.Equal(1, timesExecuted);
+			Assert.AreEqual(1, timesExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldDismissKeyboardWhenTimeThresholdHasExpired()
 		{
 			// arrange
@@ -75,7 +75,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(entry.IsFocused);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldExecuteCommandWhenMinimumLengthThreholdHasBeenReached()
 		{
 			// arrange
@@ -93,7 +93,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldNotExecuteCommandWhenMinimumLengthThreholdHasNotBeenReached()
 		{
 			// arrange
@@ -109,7 +109,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldNotDismissKeyboardWhenMinimumLengthThreholdHasNotBeenReached()
 		{
 			// arrange
@@ -126,7 +126,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(entry.IsFocused);
 		}
 
-		[Fact]
+		[Test]
 		public async Task ShouldExecuteCommandImmediatelyWhenMinimumLengthThreholdHasNotBeenSet()
 		{
 			// arrange

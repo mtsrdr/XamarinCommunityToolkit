@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 {
@@ -10,7 +10,8 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 	{
 		Person person;
 
-		public ObservableObject_Tests()
+		[SetUp]
+		public void Setup()
 		{
 			person = new Person
 			{
@@ -19,7 +20,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			};
 		}
 
-		[Fact]
+		[Test]
 		public void OnPropertyChanged()
 		{
 			PropertyChangedEventArgs updated = null;
@@ -31,10 +32,10 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			person.FirstName = "Motz";
 
 			Assert.NotNull(updated);
-			Assert.Equal(nameof(person.FirstName), updated.PropertyName);
+			Assert.AreEqual(nameof(person.FirstName), updated.PropertyName);
 		}
 
-		[Fact]
+		[Test]
 		public void OnDidntChange()
 		{
 			PropertyChangedEventArgs updated = null;
@@ -48,7 +49,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			Assert.Null(updated);
 		}
 
-		[Fact]
+		[Test]
 		public void OnChangedEvent()
 		{
 			var triggered = false;
@@ -62,7 +63,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			Assert.True(triggered, "OnChanged didn't raise");
 		}
 
-		[Fact]
+		[Test]
 		public void OnChangingEvent()
 		{
 			var triggered = false;
@@ -76,7 +77,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			Assert.True(triggered, "OnChanging didn't raise");
 		}
 
-		[Fact]
+		[Test]
 		public void ValidateEvent()
 		{
 			var contol = "Motz";
@@ -90,10 +91,10 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			person.FirstName = contol;
 
 			Assert.True(triggered, "ValidateValue didn't raise");
-			Assert.Equal(person.FirstName, contol);
+			Assert.AreEqual(person.FirstName, contol);
 		}
 
-		[Fact]
+		[Test]
 		public void NotValidateEvent()
 		{
 			var contol = person.FirstName;
@@ -107,18 +108,18 @@ namespace Xamarin.CommunityToolkit.UnitTests.ObjectModel
 			person.FirstName = "Motz";
 
 			Assert.True(triggered, "ValidateValue didn't raise");
-			Assert.Equal(person.FirstName, contol);
+			Assert.AreEqual(person.FirstName, contol);
 		}
 
-		[Fact]
-		public async Task ValidateEventException()
+		[Test]
+		public void ValidateEventException()
 		{
 			person.Validate = (oldValue, newValue) =>
 			{
 				throw new ArgumentOutOfRangeException();
 			};
 
-			var result = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+			var result = Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
 			{
 				person.FirstName = "Motz";
 				return Task.CompletedTask;

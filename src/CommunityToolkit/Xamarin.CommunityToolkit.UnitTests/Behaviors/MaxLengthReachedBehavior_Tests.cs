@@ -2,13 +2,13 @@
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Behaviors;
 using Xamarin.Forms;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 {
 	public class MaxLengthReachedBehavior_Tests
 	{
-		[Fact]
+		[Test]
 		public void ShouldExecuteCommandWhenMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -23,7 +23,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldInvokeEventHandlerWhenMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -38,7 +38,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(eventHandlerHasBeenInvoked);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldExecuteCommandWithTextValueNoLargerThenMaxLength()
 		{
 			// arrange
@@ -51,10 +51,10 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			entry.Text = "123456789";
 
 			// assert
-			Assert.Equal(expectedLength, actualLength);
+			Assert.AreEqual(expectedLength, actualLength);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldInvokeEventHandlerWithTextValueNoLargerThenMaxLength()
 		{
 			// arrange
@@ -67,10 +67,10 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			entry.Text = "123456789";
 
 			// assert
-			Assert.Equal(expectedLength, actualLength);
+			Assert.AreEqual(expectedLength, actualLength);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldNotExecuteCommandBeforeMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -84,7 +84,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(commandHasBeenExecuted);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldNotInvokeEventHandlerBeforeMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -98,7 +98,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(eventHandlerHasBeenInvoked);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldDismissKeyboardWhenMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -113,7 +113,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(entry.IsFocused);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldNotDismissKeyboardBeforeMaxLengthHasBeenReached()
 		{
 			// arrange
@@ -127,7 +127,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(entry.IsFocused);
 		}
 
-		[Fact]
+		[Test]
 		public void ShouldNotDismissKeyboardWhenOptionSetToFalse()
 		{
 			// arrange

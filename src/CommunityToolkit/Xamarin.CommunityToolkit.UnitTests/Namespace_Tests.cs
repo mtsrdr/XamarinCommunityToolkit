@@ -6,13 +6,13 @@ using Xamarin.CommunityToolkit.Effects;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests
 {
 	public class Namespace_Tests
 	{
-		[Fact]
+		[Test]
 		public void MakeSureConvertersAreInTheRightNamespace()
 		{
 			var allTheTypes = Assembly.GetAssembly(typeof(InvertedBoolConverter)).GetTypes();
@@ -22,7 +22,7 @@ namespace Xamarin.CommunityToolkit.UnitTests
 					$"{type.FullName} not in Xamarin.CommunityToolkit.Converters namespace");
 		}
 
-		[Fact]
+		[Test]
 		public void MakeSureEffectsAreInTheRightNamespace()
 		{
 			var allTheTypes = Assembly.GetAssembly(typeof(SafeAreaEffect)).GetTypes();
@@ -32,7 +32,7 @@ namespace Xamarin.CommunityToolkit.UnitTests
 					$"{type.FullName} not in Xamarin.CommunityToolkit.Effects namespace");
 		}
 
-		[Fact]
+		[Test]
 		public void MakeSureMarkupExtensionsAreInTheRightNamespace()
 		{
 			var allTheTypes = Assembly.GetAssembly(typeof(TranslateExtension)).GetTypes();
@@ -42,7 +42,7 @@ namespace Xamarin.CommunityToolkit.UnitTests
 					$"{type.FullName} not in nameof(Xamarin.CommunityToolkit.Extensions namespace");
 		}
 
-		[Fact]
+		[Test]
 		public void MakeSureBehaviorsAreInTheRightNamespace()
 		{
 			var allTheTypes = Assembly.GetAssembly(typeof(BaseBehavior<>)).GetTypes();
@@ -52,7 +52,7 @@ namespace Xamarin.CommunityToolkit.UnitTests
 					$"{type.FullName} not in Xamarin.CommunityToolkit.Behaviors namespace");
 		}
 
-		[Fact]
+		[Test]
 		public void MakeSureViewsAreInTheRightNamespace()
 		{
 			var allTheTypes = Assembly.GetAssembly(typeof(AvatarView)).GetTypes();

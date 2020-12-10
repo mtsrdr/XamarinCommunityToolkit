@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Xamarin.CommunityToolkit.Converters;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Converters
 {
@@ -21,18 +21,18 @@ namespace Xamarin.CommunityToolkit.UnitTests.Converters
 		}
 
 		[Theory]
-		[MemberData(nameof(GetData))]
+		[TestCaseSource(nameof(GetData))]
 		public void ListIsNullOrEmptyConverter(object value, bool expectedResult)
 		{
 			var listIstNullOrEmptyConverter = new ListIsNullOrEmptyConverter();
 
 			var result = listIstNullOrEmptyConverter.Convert(value, typeof(ListIsNullOrEmptyConverter), null, CultureInfo.CurrentCulture);
 
-			Assert.Equal(result, expectedResult);
+			Assert.AreEqual(result, expectedResult);
 		}
 
 		[Theory]
-		[InlineData(0)]
+		[TestCase(0)]
 		public void InValidConverterValuesThrowArgumenException(object value)
 		{
 			var listIstNullOrEmptyConverter = new ListIsNullOrEmptyConverter();

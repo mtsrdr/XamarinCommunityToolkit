@@ -1,13 +1,13 @@
 ﻿using System;
 using Xamarin.CommunityToolkit.Core;
 using Xamarin.CommunityToolkit.UI.Views;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Views
 {
 	public class MediaElement_Tests
 	{
-		[Fact]
+		[Test]
 		public void TestSource()
 		{
 			var mediaElement = new MediaElement();
@@ -24,11 +24,11 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			var source = MediaSource.FromFile("Video.mp4");
 			mediaElement.Source = source;
 
-			Assert.Equal(source, mediaElement.Source);
+			Assert.AreEqual(source, mediaElement.Source);
 			Assert.True(signaled);
 		}
 
-		[Fact]
+		[Test]
 		public void TestSourceDoubleSet()
 		{
 			var mediaElement = new MediaElement { Source = MediaSource.FromFile("Video.mp4") };
@@ -45,7 +45,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.False(signaled);
 		}
 
-		[Fact]
+		[Test]
 		public void TestFileMediaSourceChanged()
 		{
 			var source = (FileMediaSource)MediaSource.FromFile("Video.mp4");
@@ -57,12 +57,12 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			};
 
 			source.File = "Other.mp4";
-			Assert.Equal("Other.mp4", source.File);
+			Assert.AreEqual("Other.mp4", source.File);
 
 			Assert.True(signaled);
 		}
 
-		[Fact]
+		[Test]
 		public void TestSourceRoundTrip()
 		{
 			var uri = new Uri("https://sec.ch9.ms/ch9/5d93/a1eab4bf-3288-4faf-81c4-294402a85d93/XamarinShow_mid.mp4");
@@ -70,11 +70,11 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.Null(media.Source);
 			media.Source = uri;
 			Assert.NotNull(media.Source);
-			Assert.IsType<UriMediaSource>(media.Source);
-			Assert.Equal(uri, ((UriMediaSource)media.Source).Uri);
+			Assert.IsInstanceOf<UriMediaSource>(media.Source);
+			Assert.AreEqual(uri, ((UriMediaSource)media.Source).Uri);
 		}
 
-		[Fact]
+		[Test]
 		public void TestDefaultValueForShowsPlaybackControls()
 		{
 			var media = new MediaElement();
@@ -82,7 +82,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.True(media.ShowsPlaybackControls);
 		}
 
-		[Fact]
+		[Test]
 		public void TestShowsPlaybackControlsSet()
 		{
 			var media = new MediaElement { ShowsPlaybackControls = false };

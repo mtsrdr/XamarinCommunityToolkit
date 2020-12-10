@@ -1,7 +1,7 @@
-using Xamarin.CommunityToolkit.Behaviors;
+﻿using Xamarin.CommunityToolkit.Behaviors;
 using Xamarin.CommunityToolkit.UnitTests.Mocks;
 using Xamarin.Forms;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 {
@@ -10,7 +10,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 		public RequiredStringValidationBehavior_Tests()
 			 => Device.PlatformServices = new MockPlatformServices();
 
-		[Fact]
+		[Test]
 		public void IsValidTrueWhenBothIsNull_Test()
 		{
 			//arrange
@@ -25,7 +25,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(confirmPasswordBehavior.IsValid);
 		}
 
-		[Fact]
+		[Test]
 		public void IsValidFalseWhenOneIsNull_Test()
 		{
 			//arrange
@@ -42,7 +42,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.False(confirmPasswordBehavior.IsValid);
 		}
 
-		[Fact]
+		[Test]
 		public void IsValidTrueWhenEnterSameText_Test()
 		{
 			//arrange
@@ -59,7 +59,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Behaviors
 			Assert.True(confirmPasswordBehavior.IsValid);
 		}
 
-		[Fact]
+		[Test]
 		public void IsValidFalseWhenEnterDifferentText_Test()
 		{
 			//arrange

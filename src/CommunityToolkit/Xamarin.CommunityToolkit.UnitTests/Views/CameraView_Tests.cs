@@ -1,26 +1,26 @@
 ﻿using System;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
-using Xunit;
+using NUnit.Framework;
 
 namespace Xamarin.CommunityToolkit.UnitTests.Views
 {
 	public class CameraView_Tests
 	{
-		[Fact]
+		[Test]
 		public void TestConstructor()
 		{
 			var camera = new CameraView();
 
 			Assert.False(camera.IsBusy);
 			Assert.False(camera.IsAvailable);
-			Assert.Equal(CameraOptions.Default, camera.CameraOptions);
+			Assert.AreEqual(CameraOptions.Default, camera.CameraOptions);
 			Assert.False(camera.SavePhotoToFile);
-			Assert.Equal(CameraCaptureOptions.Default, camera.CaptureOptions);
-			Assert.Equal(CameraFlashMode.Off, camera.FlashMode);
+			Assert.AreEqual(CameraCaptureOptions.Default, camera.CaptureOptions);
+			Assert.AreEqual(CameraFlashMode.Off, camera.FlashMode);
 		}
 
-		[Fact]
+		[Test]
 		public void TestOnMediaCaptured()
 		{
 			var camera = new CameraView();
@@ -33,7 +33,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.True(fired);
 		}
 
-		[Fact]
+		[Test]
 		public void TestOnMediaCapturedFailed()
 		{
 			var camera = new CameraView();
@@ -45,7 +45,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.True(fired);
 		}
 
-		[Fact]
+		[Test]
 		public void TestOnShutterClicked()
 		{
 			var camera = new CameraView();
@@ -57,7 +57,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.True(fired);
 		}
 
-		[Fact]
+		[Test]
 		public void TestShutterCommand()
 		{
 			var camera = new CameraView();
@@ -73,7 +73,7 @@ namespace Xamarin.CommunityToolkit.UnitTests.Views
 			Assert.True(trigged);
 		}
 
-		[Fact]
+		[Test]
 		public void TestShutterCommandFromVM()
 		{
 			var vm = new CameraViewModel();
