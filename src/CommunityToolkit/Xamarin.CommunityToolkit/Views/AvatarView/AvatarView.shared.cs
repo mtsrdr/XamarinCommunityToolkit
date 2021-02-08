@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.UI.Views.Internals;
 using Xamarin.Forms;
 using static System.Math;
+using TypeConverterAttribute = Xamarin.Forms.TypeConverterAttribute;
 
 namespace Xamarin.CommunityToolkit.UI.Views
 {
@@ -209,7 +212,13 @@ namespace Xamarin.CommunityToolkit.UI.Views
 			control.Padding = 0;
 			control.Content = MainLayout;
 
-			Image.BindingContextChanged += (s, e) => OnValuePropertyChanged(true);
+			Image.PropertyChanged += (s, e) => OnImagePropertyChanged(s, e);
+		}
+
+		void OnImagePropertyChanged(object s, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(Image.IsLoading))
+				OnImageIsLoadingPropertyChanged();
 		}
 
 		protected override void OnSizeAllocated(double width, double height)
@@ -229,6 +238,37 @@ namespace Xamarin.CommunityToolkit.UI.Views
 
 		static void OnSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
 			=> ((AvatarView)bindable).OnValuePropertyChanged(true);
+
+		async void OnImageIsLoadingPropertyChanged()
+		{
+			if (!Image.IsLoading)
+			{
+				var isImageSourceValid = await IsImageSourceValidAsync();
+				Device.BeginInvokeOnMainThread(() => Image.IsVisible = isImageSourceValid);
+			}
+		}
+
+		async Task<bool> IsImageSourceValidAsync()
+		{
+			try
+			{
+				if (Source == null || Source.IsEmpty)
+					return false;
+
+				return await imageSourceValidator.IsImageSourceValidAsync(Source);
+			}
+			catch (OperationCanceledException)
+			{
+				Forms.Internals.Log.Warning("CancellationException", "IsImageSourceValidAsync was cancelled.");
+			}
+			catch (Exception ex)
+			{
+				Forms.Internals.Log.Warning("Error", ex.Message);
+				throw;
+			}
+
+			return false;
+		}
 
 		void OnSizePropertyChanged()
 		{
@@ -251,7 +291,7 @@ namespace Xamarin.CommunityToolkit.UI.Views
 			BatchCommit();
 		}
 
-		async void OnValuePropertyChanged(bool shouldUpdateSource)
+		void OnValuePropertyChanged(bool shouldUpdateSource)
 		{
 			if (Control == null)
 				return;
@@ -259,22 +299,15 @@ namespace Xamarin.CommunityToolkit.UI.Views
 			Image.BatchBegin();
 			if (shouldUpdateSource)
 			{
-				if (Image.Source == Source)
-					Image.Source = null;
+				if (Image.Source != Source)
+					Image.IsVisible = false;
 
-				try
+				if (Source is UriImageSource uriImageSource && !uriImageSource.CachingEnabled)
 				{
-					Image.IsVisible = await imageSourceValidator.IsImageSourceValidAsync(Source);
+					uriImageSource.CachingEnabled = true;
+					uriImageSource.CacheValidity = TimeSpan.FromDays(1);
 				}
-				catch (OperationCanceledException)
-				{
-					Forms.Internals.Log.Warning("CancellationException", "IsImageSourceValidAsync was cancelled.");
-				}
-				catch (Exception ex)
-				{
-					Forms.Internals.Log.Warning("Error", ex.Message);
-					throw;
-				}
+
 				Image.Source = Source;
 			}
 
